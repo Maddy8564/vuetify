@@ -38,9 +38,7 @@
       last: sync('user/last@promotion'),
       name: get('route/name'),
       hasAltPromotion () {
-        const now = Date.now()
-
-        return !isBefore(now, new Date(2021, 3, 27))
+        return true
       },
       hasPromotion () {
         const now = Date.now()
