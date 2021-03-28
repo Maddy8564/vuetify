@@ -1,5 +1,5 @@
 export default {
-    name: "vx-card",
+    name: "v-card",
     props: {
         color: "#26c6da",
         class: "mx-auto",
@@ -10,7 +10,10 @@ export default {
         {
             name: "v-card-title",
             value: "Twitter",
-            icon: "mdi-twitter", //
+            components: [{
+                name: 'v-icon',
+                value: 'mdi-twitter'
+            }]
         },
         {
             name: "v-card-text",
@@ -22,6 +25,9 @@ export default {
         },
         {
             name: "v-card-actions",
+            props: {
+                class: 'justify-end'
+            },
             components: [
                 {
                     name: "vx-btn",
@@ -37,7 +43,6 @@ export default {
                         label: "45",
                     },
                 },
-
             ],
         },
     ],

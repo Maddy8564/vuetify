@@ -1,5 +1,5 @@
 export default {
-    name: "vx-card",
+    name: "v-card",
     components: [
         {
             name: "v-card-title",

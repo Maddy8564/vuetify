@@ -1,5 +1,5 @@
 export default {
-    name: "vx-card",
+    name: "v-card",
     props: {
         class: "mx-auto",
         'max-width': "500",

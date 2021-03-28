@@ -1,6 +1,9 @@
 export default {
-    name: "vx-card",
-    props: {},
+    name: "v-card",
+    props: {
+        class: "mx-auto my-12",
+        'max-width': "374"
+    },
     components: [
         {
             name: "v-img",
@@ -12,6 +15,18 @@ export default {
         {
             name: "v-card-title",
             value: "Cafe Badilico",
+        },
+        {
+            name: "v-rating",
+            props: {
+                class: "mx-4",
+                value: 4.5,
+                color: "amber",
+                dense: true,
+                'half-increments': true,
+                readonly: true,
+                size: "14",
+            }
         },
         {
             name: "v-card-subtitle",
@@ -38,7 +53,7 @@ export default {
         {
             name: "vx-chips",
             props: {
-                class: "ma-4",
+                class: "mx-4",
                 "active-class": "deep-purple accent-4 white--text",
                 column: true,
                 chips: ["5:30PM", "7:30PM", "8:00PM", "9:00PM"],

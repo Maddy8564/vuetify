@@ -21,11 +21,7 @@
       <v-skeleton-loader height="100%" type="image"></v-skeleton-loader>
     </template>
 
-    <template v-if="components">
-      <vx-component :components="components" />
-    </template>
-
-    <slot v-else></slot>
+    <slot ></slot>
   </v-img>
 </template>
 
@@ -43,7 +39,6 @@ export default {
     rectanglePro: { type: Boolean, default: false },
     rectangleXS: { type: Boolean, default: false },
     rectangleLG: { type: Boolean, default: false },
-    components: { type: Array },
   },
   computed: {
     aspectRatio() {
