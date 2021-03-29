@@ -3,6 +3,7 @@ export default {
     props: {},
     toolbar: {
         title: 'Row',
+        add: 'Add column'
     },
     components: [{
         name: 'v-col',

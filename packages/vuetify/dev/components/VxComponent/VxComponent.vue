@@ -2,35 +2,18 @@
   <fragment>
     <template v-for="(component, index) in components">
       <component
-        class="position-relative"
         :is="component.name"
         :key="index"
         v-bind="component.props"
-        @click.stop="onClick(component)"
+        @click.stop="onEdit(component)"
       >
-        <v-toolbar
-          absolute
-          height="20"
-          color="grey lighten-3"
-          class="mb-4 left border-bottom-right-radius"
-          dense
-          flat
-          v-if="!preview && component.toolbar"
-        >
-          <v-toolbar-title class="text-caption text-bold">{{
-            component.toolbar.title
-          }}</v-toolbar-title>
-        </v-toolbar>
-
-        <v-btn
-          v-if="!preview && component.toolbar"
-          absolute
-          right
-          x-small
-          color="error"
-        >
-          Remove
-        </v-btn>
+        <VxComponentToolbar
+          :preview="preview"
+          :component="component"
+          @edit="onEdit(component, true)"
+          @add="(name) => onAdd(component, name)"
+          @remove="onRemove(index, components)"
+        />
 
         <div v-if="component.html" v-html="component.value"></div>
 
@@ -38,7 +21,7 @@
           {{ component.value }}
         </template>
 
-        <template v-if="component.components">
+        <template v-if="component.components && component.components.length">
           <vx-component
             :depth="depth + 1"
             :components="component.components"
@@ -47,61 +30,43 @@
           </vx-component>
         </template>
 
+        <VxComponentPicker
+          v-if="component.picker"
+          @add="(name) => onAdd(component, name)"
+        />
+
         <template v-if="component.value && component.right">
           {{ component.value }}
         </template>
       </component>
     </template>
 
-    <v-dialog v-model="dialog" width="500">
-      <v-card>
-        <v-card-title>
-          {{ getName(component) }}
-        </v-card-title>
-
-        <v-card-subtitle v-if="component.value">
-          {{ component.value }}
-        </v-card-subtitle>
-
-        <v-card-text>
-          <v-row>
-            <v-col
-              cols="6"
-              v-for="(prop, index) in getProps(component)"
-              :key="index"
-            >
-              <vx-input
-                outlined
-                dense
-                hide-details
-                :label="prop.name"
-                :type="getType(prop)"
-                @change="event => onChangeProp(event, prop)"
-                v-model="component.props[prop.name]"
-              />
-            </v-col>
-          </v-row>
-        </v-card-text>
-
-        <v-divider></v-divider>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="dialog = false"> I accept </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <VxComponentDialog
+      v-model="dialog"
+      :component="component"
+      @forceUpdate="$forceUpdate()"
+    />
   </fragment>
 </template>
 
 <script>
 import _ from "lodash";
 import { Fragment } from "vue-fragment";
-import webTypes from "../../../dist/json/web-types.json";
+
+import components from "./components";
+
+import VxComponentDialog from "./VxComponentDialog";
+import VxComponentPicker from "./VxComponentPicker";
+import VxComponentToolbar from "./VxComponentToolbar";
 
 export default {
   name: "VxComponent",
-  components: { Fragment },
+  components: {
+    Fragment,
+    VxComponentDialog,
+    VxComponentToolbar,
+    VxComponentPicker,
+  },
   props: {
     preview: { type: Boolean, required: true },
     depth: { type: Number, required: true },
@@ -115,29 +80,23 @@ export default {
     };
   },
   methods: {
-    onClick(component) {
-      this.dialog = true;
-      this.component = component;
-    },
-    onChangeProp(event, prop) {
-      this.component.props[prop.name] = event
-      this.$forceUpdate()
-    },
-    getName(component) {
-      return _.startCase(component.name).replace(/\s/g, "").replace("Vx", "V");
-    },
-    getType(attribute) {
-      if (Array.isArray(attribute.value.type)) {
-        return attribute.value.type[0];
-      } else {
-        return attribute.value.type;
+    onEdit(component, skip) {
+      if (skip || !component.toolbar) {
+        this.dialog = true;
+        this.component = component;
       }
     },
-    getProps(component) {
-      const name = this.getName(component);
-      const tag = webTypes.contributions.html.tags.find((x) => x.name === name);
-      if (tag) {
-        return _.sortBy(tag.attributes, "value.type");
+    onRemove(index, components) {
+      components.splice(index, 1);
+      console.log("onRemove", components);
+      this.$root.$emit("forceUpdate");
+    },
+    onAdd(component, name) {
+      const item = components.find((x) => x.name == name);
+
+      if (item) {
+        component.components.push(_.cloneDeep(item));
+        this.$root.$emit("forceUpdate");
       }
     },
   },
