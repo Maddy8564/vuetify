@@ -23,14 +23,14 @@
     </template>
 
     <template v-if="label">{{ label }}</template>
-    
+
     <slot v-else></slot>
   </v-btn>
 </template>
 
 <script>
 export default {
-  name: "vxBtn",
+  name: 'vxBtn',
   props: {
     label: { type: String, required: false },
     icon: { type: String, required: false },
@@ -44,18 +44,18 @@ export default {
   },
   data() {
     return {
-      rel: this.blank ? "noopener" : "",
-      target: this.blank ? "_blank" : "",
-    };
+      rel: this.blank ? 'noopener' : '',
+      target: this.blank ? '_blank' : '',
+    }
   },
   created() {
     if (this.link) {
-      if (this.link.startsWith("http://") || this.link.startsWith("https://")) {
-        this.$attrs.href = this.link;
+      if (this.link.startsWith('http://') || this.link.startsWith('https://')) {
+        this.$attrs.href = this.link
       } else {
-        this.$attrs.to = this.link;
+        this.$attrs.to = this.link
       }
     }
   },
-};
+}
 </script>

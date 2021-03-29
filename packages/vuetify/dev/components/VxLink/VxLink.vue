@@ -53,17 +53,20 @@ export default {
       toValue: this.to,
       rel: this.blank ? 'noopener' : '',
       target: this.blank ? '_blank' : '',
-      classes: { 'dark--text': this.dark, 'text-decoration-underline': this.underline },
-    };
+      classes: {
+        'dark--text': this.dark,
+        'text-decoration-underline': this.underline,
+      },
+    }
   },
   created() {
     if (this.link) {
       if (this.link.startsWith('http://') || this.link.startsWith('https://')) {
-        this.hrefValue = this.link;
+        this.hrefValue = this.link
       } else {
-        this.toValue = this.link;
+        this.toValue = this.link
       }
     }
   },
-};
+}
 </script>

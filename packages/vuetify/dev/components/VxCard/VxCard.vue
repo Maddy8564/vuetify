@@ -6,9 +6,9 @@
 
 <script>
 export default {
-  name: "vxCard",
+  name: 'vxCard',
   props: {
     value: { type: Object, required: true },
   },
-};
+}
 </script>

@@ -17,18 +17,19 @@
 </template>
 
 <script>
-import components from "./components";
+import components from './components'
+
 export default {
-  name: "VxComponentPicker",
+  name: 'VxComponentPicker',
   props: {
     // preview: { type: Boolean, required: true },
     // component: { type: Object, required: true },
   },
   data() {
     return {
-      components,
+      components: Object.values(components),
       component: null,
-    };
+    }
   },
-};
+}
 </script>

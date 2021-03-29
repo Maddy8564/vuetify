@@ -24,5 +24,5 @@ export default {
     pointer: { type: Boolean, default: false },
     underline: { type: Boolean, default: false },
   },
-};
+}
 </script>

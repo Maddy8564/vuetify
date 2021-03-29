@@ -1,5 +1,7 @@
 <template>
-  <v-responsive :aspect-ratio="aspectRatio" v-bind="$attrs" v-on="$listeners"> <slot></slot> </v-responsive>
+  <v-responsive :aspect-ratio="aspectRatio" v-bind="$attrs" v-on="$listeners">
+    <slot></slot>
+  </v-responsive>
 </template>
 
 <script>
@@ -15,31 +17,31 @@ export default {
   computed: {
     aspectRatio() {
       if (this.square) {
-        return 1;
+        return 1
       } else if (this.banner) {
-        return 2.5;
+        return 2.5
       } else if (this.rectangle) {
-        return 1.75;
+        return 1.75
       } else if (this.rectanglePro) {
         if (this.breakpoint.xs) {
-          return 9 / 16;
+          return 9 / 16
         } else if (this.breakpoint.sm || this.breakpoint.md) {
-          return 1.75;
+          return 1.75
         } else {
-          return 2.5;
+          return 2.5
         }
       } else if (this.rectangleXS) {
         if (this.breakpoint.xs) {
-          return 1;
+          return 1
         } else if (this.breakpoint.sm || this.breakpoint.md) {
-          return 1.75;
+          return 1.75
         } else {
-          return 2.5;
+          return 2.5
         }
       } else {
-        return this.$attrs['aspect-ratio'];
+        return this.$attrs['aspect-ratio']
       }
     },
   },
-};
+}
 </script>

@@ -22,5 +22,5 @@ export default {
     bold: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
   },
-};
+}
 </script>

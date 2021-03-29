@@ -21,14 +21,7 @@
 
       <v-spacer />
 
-      <v-btn
-        depressed
-        small
-        icon
-        color="primary"
-        class="text-none text-caption"
-        @click="$emit('edit')"
-      >
+      <v-btn depressed small icon color="primary" class="text-none text-caption" @click="$emit('edit')">
         <!-- {{ component.toolbar.add }} -->
         <v-icon>mdi-pencil-outline</v-icon>
       </v-btn>
@@ -64,20 +57,20 @@
 
 <script>
 export default {
-  name: "VxComponentToolbar",
+  name: 'VxComponentToolbar',
   props: {
     preview: { type: Boolean, required: true },
     component: { type: Object, required: true },
   },
-  methods:{
+  methods: {
     onAdd(name, component) {
-      const item = components.find((x) => x.name == name);
+      const item = components.find(x => x.name == name)
 
       if (item) {
-        component.components.push(_.cloneDeep(item));
-        this.$root.$emit("forceUpdate");
+        component.components.push(_.cloneDeep(item))
+        this.$root.$emit('forceUpdate')
       }
     },
-  }
-};
+  },
+}
 </script>

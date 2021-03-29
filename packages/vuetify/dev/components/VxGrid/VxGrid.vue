@@ -6,9 +6,9 @@
 
 <script>
 export default {
-  name: "vxGrid",
+  name: 'vxGrid',
   props: {
     columns: { type: Array, required: true },
   },
-};
+}
 </script>

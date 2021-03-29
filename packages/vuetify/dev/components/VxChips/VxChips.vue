@@ -8,9 +8,9 @@
 
 <script>
 export default {
-  name: "vxChips",
+  name: 'vxChips',
   props: {
     chips: { type: Array, required: true },
   },
-};
+}
 </script>
