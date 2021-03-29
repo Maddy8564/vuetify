@@ -2,7 +2,7 @@
   <v-dialog v-model="dialog" scrollable width="500" @click:outside="dialog = false">
     <v-card>
       <v-card-title>
-        {{ getName(component) }}
+        {{ component.title }}
       </v-card-title>
 
       <v-divider />
@@ -10,7 +10,15 @@
       <v-card-text style="height: 500px" class="pa-4">
         <v-row>
           <v-col cols="12">
-            <vx-input v-if="component.value" outlined dense hide-details label="Value" v-model="component.value" />
+            <vx-input
+              v-if="component.value"
+              outlined
+              dense
+              hide-details
+              label="Value"
+              v-model="component.value"
+              :type="component.type"
+            />
           </v-col>
 
           <v-col cols="6" v-for="(prop, index) in getProps(component)" :key="index">
@@ -19,7 +27,7 @@
               dense
               hide-details
               :label="prop.name"
-              :type="getType(prop)"
+              :type="prop.type"
               @change="event => onChangeProp(event, prop)"
               v-model="component.props[prop.name]"
             >
@@ -41,6 +49,7 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="primary" text @click="dialog = false"> Cancel </v-btn>
+        <v-btn color="error" text @click="$emit('remove')"> Remove </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -71,11 +80,10 @@ export default {
   },
   methods: {
     onChangeProp(event, prop) {
-      this.component.props[prop.name] = event
-      this.$emit('forceUpdate')
-    },
-    getName(component) {
-      return _.startCase(component.name).replace(/\s/g, '').replace('Vx', 'V')
+      if (prop.type === 'boolean') {
+        this.component.props[prop.name] = event
+        this.$emit('forceUpdate')
+      }
     },
     getType(attribute) {
       if (Array.isArray(attribute.value.type)) {
@@ -94,11 +102,23 @@ export default {
       }
     },
     getProps(component) {
-      const name = this.getName(component)
-      const tag = webTypes.contributions.html.tags.find(x => x.name === name)
+      const tag = webTypes.contributions.html.tags.find(x => x.name === component.title)
+
       if (tag) {
-        console.log(tag.attributes)
-        return _.sortBy(tag.attributes, x => [this.getType(x), x.name])
+        const attributes = tag.attributes.map(x => {
+          x.type = this.getType(x)
+          return x
+        })
+
+        const addOnAttributes = [
+          {
+            name: 'class',
+            description: 'Sets the DOM class on the component',
+            type: 'string',
+          },
+        ]
+
+        return _.sortBy([...attributes, ...addOnAttributes], x => [x.type, x.name])
       }
     },
   },

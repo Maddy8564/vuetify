@@ -19,4 +19,7 @@ export default new Vuetify({
     iconfont: 'mdi',
     // iconfont: 'faSvg',
   },
+  theme: {
+    dark: false,
+  },
 })

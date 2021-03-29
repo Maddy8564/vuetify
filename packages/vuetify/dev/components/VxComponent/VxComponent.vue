@@ -1,13 +1,13 @@
 <template>
   <fragment>
     <template v-for="(component, index) in components">
-      <component :is="component.name" :key="index" v-bind="component.props" @click.stop="onEdit(component)">
+      <component :is="component.name" :key="index" v-bind="component.props" @click.stop="onEdit(component, index)">
         <VxComponentToolbar
           :preview="preview"
           :component="component"
-          @edit="onEdit(component, true)"
+          @edit="onEdit(component, index, true)"
           @add="name => onAdd(component, name)"
-          @remove="onRemove(index, components)"
+          @remove="onRemove(index)"
         />
 
         <div v-if="component.html" v-html="component.value"></div>
@@ -20,7 +20,13 @@
           <vx-component :depth="depth + 1" :components="component.components" :preview="preview"> </vx-component>
         </template>
 
-        <VxComponentPicker v-if="component.picker" @add="name => onAdd(component, name)" />
+        <template v-if="component.picker">
+          <v-col cols="12" class="pa-0" v-if="component.name === 'v-row'">
+            <VxComponentPicker @add="name => onAdd(component, name)" />
+          </v-col>
+
+          <VxComponentPicker v-else @add="name => onAdd(component, name)" />
+        </template>
 
         <template v-if="component.value && component.right">
           {{ component.value }}
@@ -28,7 +34,12 @@
       </component>
     </template>
 
-    <VxComponentDialog v-model="dialog" :component="component" @forceUpdate="$forceUpdate()" />
+    <VxComponentDialog
+      v-model="dialog"
+      :component="component"
+      @forceUpdate="$forceUpdate()"
+      @remove="onRemove(index)"
+    />
   </fragment>
 </template>
 
@@ -36,7 +47,7 @@
 import _ from 'lodash'
 import { Fragment } from 'vue-fragment'
 
-import components from './components'
+import { getComponent } from './components'
 
 import VxComponentDialog from './VxComponentDialog'
 import VxComponentPicker from './VxComponentPicker'
@@ -58,27 +69,28 @@ export default {
   data() {
     return {
       key: 0,
+      index: 0,
       dialog: false,
       component: {},
     }
   },
   methods: {
-    onEdit(component, skip) {
+    onEdit(component, index, skip) {
       if (skip || !component.toolbar) {
         this.dialog = true
+        this.index = index
         this.component = component
       }
     },
-    onRemove(index, components) {
-      components.splice(index, 1)
-      console.log('onRemove', components)
+    onRemove(index) {
+      this.components.splice(index, 1)
       this.$root.$emit('forceUpdate')
     },
     onAdd(component, name) {
-      const item = components[name]
+      const item = getComponent(name)
 
       if (item) {
-        component.components.push(_.cloneDeep(item))
+        component.components.push(item)
         this.$root.$emit('forceUpdate')
       }
     },

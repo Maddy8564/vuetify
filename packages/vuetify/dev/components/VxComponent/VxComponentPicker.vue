@@ -1,13 +1,13 @@
 <template>
-  <v-card outlined class="pa-0">
+  <v-card outlined class="pa-0 ma-0">
     <v-card-subtitle class="text-center">Component Picker</v-card-subtitle>
     <v-card-text>
       <v-autocomplete
         v-model="component"
         :items="components"
         outlined
-        item-text="name"
-        item-value="name"
+        item-text="title"
+        item-value="title"
         dense
         label="Components"
         @change="$emit('add', component)"
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import components from './components'
+import { componentsArray } from './components'
 
 export default {
   name: 'VxComponentPicker',
@@ -27,7 +27,7 @@ export default {
   },
   data() {
     return {
-      components: Object.values(components),
+      components: componentsArray,
       component: null,
     }
   },

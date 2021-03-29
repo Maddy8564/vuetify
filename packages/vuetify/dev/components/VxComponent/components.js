@@ -1,9 +1,8 @@
 import _ from 'lodash'
 
-const components = {
-  vContainer: {
+export const components = {
+  VContainer: {
     name: 'v-container',
-    props: {},
     picker: true,
     toolbar: {
       title: 'Container',
@@ -15,10 +14,8 @@ const components = {
     },
     components: [],
   },
-  vRow: {
+  VRow: {
     name: 'v-row',
-    picker: true,
-    props: {},
     toolbar: {
       title: 'Row',
       add: {
@@ -28,40 +25,40 @@ const components = {
     },
     components: [],
   },
-  vCol: {
+  VCol: {
     name: 'v-col',
     picker: true,
     toolbar: {
       title: 'Column',
     },
-    props: {},
     components: [],
   },
-  vCard: {
+  VCard: {
     name: 'v-card',
-    props: {},
+    picker: true,
     toolbar: {
       title: 'Card',
     },
     components: [],
   },
-  vCardTitle: {
+  VCardTitle: {
     name: 'v-card-title',
     value: 'Card title',
   },
-  vCardSubtitle: {
+  VCardSubtitle: {
     name: 'v-card-subtitle',
     value: 'Subtitle text',
   },
-  vCardText: {
+  VCardText: {
     name: 'v-card-text',
     value: 'Greyhound divisively hello coldly wonderfully marginally far upon excluding.',
+    type: 'textarea'
   },
-  vCardActions: {
+  VCardActions: {
     name: 'v-card-actions',
     components: [],
   },
-  vBtn: {
+  VBtn: {
     name: 'vx-btn',
     value: 'Action 1',
     props: {
@@ -71,17 +68,22 @@ const components = {
   },
 }
 
-const getComponent = name => {
+export const getComponent = name => {
   return _.cloneDeep(components[name])
 }
 
-components.vRow.components = [getComponent('vCol')]
-components.vCard.components = [
-  getComponent('vCardTitle'),
-  getComponent('vCardSubtitle'),
-  getComponent('vCardText'),
-  getComponent('vCardActions'),
+components.VRow.components = [getComponent('VCol')]
+components.VCard.components = [
+  getComponent('VCardTitle'),
+  getComponent('VCardSubtitle'),
+  getComponent('VCardText'),
+  getComponent('VCardActions'),
 ]
-components.vCardActions.components = [getComponent('vBtn')]
+components.VCardActions.components = [getComponent('VBtn')]
 
-export default { components, getComponent }
+export const componentsArray = _.map(components, (value, key) => {
+  components[value.name] = getComponent(key)
+  value.props = {};
+  value.title = key
+  return value
+})
