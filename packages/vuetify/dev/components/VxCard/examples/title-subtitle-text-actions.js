@@ -1,5 +1,6 @@
 export default {
     name: "v-card",
+    props: {},
     components: [
         {
             name: "v-card-title",
@@ -19,16 +20,16 @@ export default {
             components: [
                 {
                     name: "vx-btn",
+                    value: "Action 1",
                     props: {
-                        label: "Action 1",
                         text: true,
                         color: 'primary'
                     },
                 },
                 {
                     name: "vx-btn",
+                    value: "Action 2",
                     props: {
-                        label: "Action 2",
                         text: true,
                         color: 'primary'
                     },

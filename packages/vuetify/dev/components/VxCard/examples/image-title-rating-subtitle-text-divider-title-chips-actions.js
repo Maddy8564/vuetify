@@ -65,8 +65,8 @@ export default {
             components: [
                 {
                     name: "vx-btn",
+                    value: "Reserve",
                     props: {
-                        label: "Reserve",
                         text: true,
                         color: "deep-purple lighten-2",
                     },

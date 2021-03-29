@@ -21,7 +21,10 @@
     <template v-if="icon">
       <v-icon>{{ icon }}</v-icon>
     </template>
+
     <template v-if="label">{{ label }}</template>
+    
+    <slot v-else></slot>
   </v-btn>
 </template>
 

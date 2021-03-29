@@ -10,6 +10,7 @@ export default {
         {
             name: "v-card-title",
             value: "Twitter",
+            right: true,
             components: [{
                 name: 'v-icon',
                 value: 'mdi-twitter'
@@ -26,21 +27,38 @@ export default {
         {
             name: "v-card-actions",
             props: {
-                class: 'justify-end'
+                class: 'justify-end',
             },
             components: [
                 {
+                    name: "v-list-item",
+                    components: [{
+                        name: "v-list-item-avatar",
+                        props: {
+                            color: "grey darken-3",
+                        },
+                        components: [{
+                            name: 'v-img',
+                            props: {
+                                class: "elevation-6",
+                                src: "https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+                            }
+                        }]
+                    },]
+                },
+                {
                     name: "vx-btn",
+                    value: "256",
                     props: {
                         icon: "mdi-heart",
-                        label: "256",
+                        style: 'margin-right: 8px'
                     },
                 },
                 {
                     name: "vx-btn",
+                    value: "45",
                     props: {
                         icon: "mdi-share-variant",
-                        label: "45",
                     },
                 },
             ],

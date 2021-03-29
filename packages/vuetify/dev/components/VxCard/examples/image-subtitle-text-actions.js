@@ -42,16 +42,16 @@ export default {
             components: [
                 {
                     name: "vx-btn",
+                    value: "Share",
                     props: {
-                        label: "Share",
                         text: true,
                         color: "orange",
                     },
                 },
                 {
                     name: "vx-btn",
+                    value: "Explore",
                     props: {
-                        label: "Explore",
                         text: true,
                         color: "orange",
                     },

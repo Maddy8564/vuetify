@@ -113,5 +113,8 @@
     "tags": "dist/json/tags.json",
     "attributes": "dist/json/attributes.json"
   },
-  "web-types": "dist/json/web-types.json"
+  "web-types": "dist/json/web-types.json",
+  "dependencies": {
+    "vue-fragment": "^1.5.2"
+  }
 }
