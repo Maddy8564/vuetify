@@ -13,7 +13,7 @@ const component2 = {
 const router = new Router({
   routes: [
     {
-      path: '/page1',
+      path: '/',
       name: 'Page 1',
       component: component1,
     },
@@ -22,7 +22,7 @@ const router = new Router({
       name: 'Page 2',
       component: component2,
     },
-    { path: '*', redirect: '/page1' },
+    { path: '*', redirect: '/' },
   ],
 })
 
